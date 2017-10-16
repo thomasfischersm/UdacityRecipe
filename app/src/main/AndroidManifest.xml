@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <provider
             android:name=".data.RecipeContentProvider"
             android:authorities="com.playposse.udacityrecipe.provider"
@@ -22,12 +21,14 @@
             android:name=".service.RecipeDownloadService"
             android:exported="false"/>
 
-        <activity android:name=".LoadingActivity">
+        <activity android:name=".activity.LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".activity.RecipeListActivity">
         </activity>
     </application>
 

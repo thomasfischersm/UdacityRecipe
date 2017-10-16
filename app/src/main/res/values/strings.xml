@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">UdacityRecipe</string>
+
+    <!-- Loading activity -->
+    <string name="loading_message">Downloading recipes…</string>
+
+    <!-- Recipe list fragment -->
+    <string name="recipe_image_content_description">An enticing photo of the recipe.</string>
+    <string name="servings">(%1$d servings)</string>
 </resources>

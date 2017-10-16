@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:id="@+id/root_view"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             android:layout_margin="8dp"
+                                             android:background="@drawable/rectangle_with_border">
+
+    <ImageView
+        android:id="@+id/recipe_image_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/recipe_image_content_description"
+        android:padding="1px"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/recipe_name_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        android:paddingEnd="6sp"
+        android:paddingLeft="16dp"
+        android:paddingRight="4sp"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:textColor="#000"
+        android:textSize="32sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_image_view"
+        tools:text="Yellow Cake"/>
+
+    <TextView
+        android:id="@+id/servings_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@+id/recipe_name_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/recipe_name_text_view"
+        tools:text="(8 servings)"/>
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horizontal_middle_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"/>
+</android.support.constraint.ConstraintLayout>

@@ -5,12 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.playposse.udacityrecipe.LoadingActivity">
+    tools:context="com.playposse.udacityrecipe.activity.LoadingActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:drawableTop="@drawable/ic_cloud_download_black_24dp"
+        android:text="@string/loading_message"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

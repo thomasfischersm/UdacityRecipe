@@ -2,7 +2,11 @@ package com.playposse.udacityrecipe;
 
 import android.app.Application;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.os.ResultReceiver;
 
+import com.playposse.udacityrecipe.activity.ActivityNavigator;
 import com.playposse.udacityrecipe.data.RecipeDatabaseHelper;
 import com.playposse.udacityrecipe.service.RecipeDownloadService;
 
@@ -21,6 +25,15 @@ public class UdacityRecipeApplication extends Application {
         }
 
         // Cache movie data.
-        startService(new Intent(getApplicationContext(), RecipeDownloadService.class));
+        Intent intent = new Intent(getApplicationContext(), RecipeDownloadService.class);
+        intent.putExtra(
+                RecipeDownloadService.RESULT_RECEIVER_PARAM,
+                new ResultReceiver(new Handler()) {
+                    @Override
+                    protected void onReceiveResult(int resultCode, Bundle resultData) {
+                        ActivityNavigator.startMainActivity(getApplicationContext());
+                    }
+                });
+        startService(intent);
     }
 }

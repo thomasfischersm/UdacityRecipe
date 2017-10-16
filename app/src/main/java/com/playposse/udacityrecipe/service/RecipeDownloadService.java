@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.support.v4.os.ResultReceiver;
 import android.util.Log;
 
 import com.playposse.udacityrecipe.BuildConfig;
@@ -34,8 +35,13 @@ public class RecipeDownloadService extends IntentService {
 
     private static final String LOG_TAG = RecipeDownloadService.class.getSimpleName();
 
+    /**
+     * Intent parameter to pass a {@link ResultReceiver}.
+     */
+    public static final String RESULT_RECEIVER_PARAM = "resultReceiver";
+
     private static final String SERVICE_NAME = "RecipeDownloadService";
-    public static final String RECIPE_SERVICE_BASE_URL = "https://d17h27t6h515a5.cloudfront.net";
+    private static final String RECIPE_SERVICE_BASE_URL = "https://d17h27t6h515a5.cloudfront.net";
 
     public RecipeDownloadService() {
         super(SERVICE_NAME);
@@ -64,6 +70,11 @@ public class RecipeDownloadService extends IntentService {
             RecipeDatabaseHelper databaseHelper = new RecipeDatabaseHelper(getApplicationContext());
             DatabaseDumper.dumpTables(databaseHelper);
             databaseHelper.close();
+        }
+
+        if (intent != null) {
+            ResultReceiver resultReceiver = intent.getParcelableExtra(RESULT_RECEIVER_PARAM);
+            resultReceiver.send(0, null);
         }
     }
 
