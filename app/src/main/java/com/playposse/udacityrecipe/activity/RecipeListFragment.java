@@ -2,14 +2,12 @@ package com.playposse.udacityrecipe.activity;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,15 +18,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 import com.playposse.udacityrecipe.R;
 import com.playposse.udacityrecipe.data.RecipeContentContract.RecipeTable;
 import com.playposse.udacityrecipe.data.RecipePhotoLibrary;
+import com.playposse.udacityrecipe.util.FontUtil;
 import com.playposse.udacityrecipe.util.RecyclerViewCursorAdapter;
 import com.playposse.udacityrecipe.util.SmartCursor;
-import com.playposse.udacityrecipe.util.StringUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -171,22 +166,11 @@ public class RecipeListFragment extends Fragment implements LoaderManager.Loader
             holder.recipeNameTextView.setText(recipeName);
             holder.servingsTextView.setText(servingsStr);
 
-            if (!StringUtil.isEmpty(imageUrl)) {
-                Glide.with(getActivity())
-                        .load(imageUrl)
-                        .apply(RequestOptions.overrideOf(Target.SIZE_ORIGINAL))
-                        .into(holder.recipeImageView);
-            } else {
-                Integer recipeDrawableId = RecipePhotoLibrary.getPhoto(recipeName);
-                if (recipeDrawableId != null) {
-                    Drawable drawable = ContextCompat.getDrawable(getActivity(), recipeDrawableId);
-                    Glide.with(getActivity())
-                            .load(recipeDrawableId)
-                            .apply(RequestOptions.overrideOf(Target.SIZE_ORIGINAL))
-                            .into(holder.recipeImageView);
-
-                }
-            }
+            RecipePhotoLibrary.loadPhoto(
+                    getActivity(),
+                    holder.recipeImageView,
+                    imageUrl,
+                    recipeName);
 
             holder.rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -196,6 +180,10 @@ public class RecipeListFragment extends Fragment implements LoaderManager.Loader
                     }
                 }
             });
+
+            // Apply custom font.
+            FontUtil.apply(holder.recipeNameTextView, FontUtil.CORMORANT_REGULAR_FONT);
+            FontUtil.apply(holder.servingsTextView, FontUtil.CORMORANT_REGULAR_FONT);
         }
     }
 

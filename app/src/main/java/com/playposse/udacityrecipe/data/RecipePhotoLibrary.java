@@ -1,6 +1,15 @@
 package com.playposse.udacityrecipe.data;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.playposse.udacityrecipe.R;
+import com.playposse.udacityrecipe.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +34,30 @@ public final class RecipePhotoLibrary {
             return recipeNameToDrawableMap.get(recipeName);
         } else {
             return null;
+        }
+    }
+
+    public static void loadPhoto(
+            Context context,
+            ImageView imageView,
+            String imageUrl,
+            String recipeName) {
+
+        if (!StringUtil.isEmpty(imageUrl)) {
+            Glide.with(context)
+                    .load(imageUrl)
+                    .apply(RequestOptions.overrideOf(Target.SIZE_ORIGINAL))
+                    .into(imageView);
+        } else {
+            Integer recipeDrawableId = RecipePhotoLibrary.getPhoto(recipeName);
+            if (recipeDrawableId != null) {
+                Drawable drawable = ContextCompat.getDrawable(context, recipeDrawableId);
+                Glide.with(context)
+                        .load(recipeDrawableId)
+                        .apply(RequestOptions.overrideOf(Target.SIZE_ORIGINAL))
+                        .into(imageView);
+
+            }
         }
     }
 }
