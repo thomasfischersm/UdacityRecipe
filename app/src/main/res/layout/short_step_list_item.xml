@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/root_view"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/step_image_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"/>
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@string/recipe_step_photo_content_description"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp"/>
 
     <TextView
         android:id="@+id/step_text_view"

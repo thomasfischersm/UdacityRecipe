@@ -39,4 +39,9 @@ public abstract class ParentActivity extends AppCompatActivity  {
         toolbarTitleTextView.setText(R.string.app_name);
         FontUtil.apply(toolbarTitleTextView, FontUtil.CORMORANT_BOLD_FONT);
     }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        toolbarTitleTextView.setText(title);
+    }
 }

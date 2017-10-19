@@ -33,7 +33,7 @@ public class RecipeActivity extends ParentActivity implements RecipeFragmentOwne
     }
 
     @Override
-    public void onRecipeStepSelected(long recipeId, long stepId) {
-        // TODO
+    public void onRecipeStepSelected(long recipeId, int stepId, String recipeName) {
+        ActivityNavigator.startRecipeSepActivity(this, recipeId, stepId, recipeName);
     }
 }

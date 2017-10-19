@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -48,6 +49,7 @@ public class RecipeFragment extends Fragment {
     @BindView(R.id.step_recycler_view) RecyclerView stepRecyclerView;
 
     private Long recipeId;
+    private String recipeName;
 
     private RecipeFragmentOwner owner;
     private IngredientAdapter ingredientAdapter;
@@ -154,7 +156,7 @@ public class RecipeFragment extends Fragment {
             if (cursor.moveToFirst()) {
                 SmartCursor smartCursor = new SmartCursor(cursor, RecipeTable.COLUMN_NAMES);
 
-                String recipeName = smartCursor.getString(RecipeTable.NAME_COLUMN);
+                recipeName = smartCursor.getString(RecipeTable.NAME_COLUMN);
                 String imageUrl = smartCursor.getString(RecipeTable.IMAGE_COLUMN);
 
                 recipeNameTextView.setText(recipeName);
@@ -165,6 +167,8 @@ public class RecipeFragment extends Fragment {
                         recipeBackgrondImageView,
                         imageUrl,
                         recipeName);
+
+                getActivity().setTitle(recipeName);
             }
         }
 
@@ -288,7 +292,7 @@ public class RecipeFragment extends Fragment {
         protected void onBindViewHolder(StepViewHolder holder, int position, Cursor cursor) {
             SmartCursor smartCursor = new SmartCursor(cursor, StepTable.COLUMN_NAMES);
 
-            int stepIndex = smartCursor.getInt(StepTable.STEP_INDEX_COLUMN);
+            final int stepIndex = smartCursor.getInt(StepTable.STEP_INDEX_COLUMN);
             String shortDescription = smartCursor.getString(StepTable.SHORT_DESCRIPTION_COLUMN);
             String imageUrl = smartCursor.getString(StepTable.THUMBNAIL_COLUMN);
 
@@ -300,11 +304,27 @@ public class RecipeFragment extends Fragment {
                 holder.stepTextView.setText(str);
             }
 
-            if (!StringUtil.isEmpty(imageUrl))
+            if (!StringUtil.isEmpty(imageUrl)) {
+                holder.stepImageView.setVisibility(View.VISIBLE);
                 Glide.with(getActivity())
                         .load(imageUrl)
                         .apply(RequestOptions.overrideOf(Target.SIZE_ORIGINAL))
+                        .apply(RequestOptions.circleCropTransform())
                         .into(holder.stepImageView);
+            } else {
+                holder.stepImageView.setVisibility(View.GONE);
+            }
+
+            holder.rootView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ActivityNavigator.startRecipeSepActivity(
+                            getActivity(),
+                            recipeId,
+                            stepIndex,
+                            recipeName);
+                }
+            });
         }
     }
 
@@ -313,6 +333,7 @@ public class RecipeFragment extends Fragment {
      */
     class StepViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.root_view) LinearLayout rootView;
         @BindView(R.id.step_image_view) ImageView stepImageView;
         @BindView(R.id.step_text_view) TextView stepTextView;
 

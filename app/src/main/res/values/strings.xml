@@ -10,6 +10,9 @@
 
     <!-- Recipe fragment -->
     <string name="recipe_photo_background_content_description">A background with an enticing photo of the recipe.</string>
+    <string name="recipe_step_photo_content_description">A photo of the cooking step.</string>
     <string name="whole_ingredient">%1$s %2$s %3$s</string>
-    <string name="whole_short_step">%1$s. %2$s</string>
+    <string name="whole_short_step">%1$d. %2$s</string>
+
+    <!-- Recipe step fragment -->
 </resources>
