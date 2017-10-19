@@ -54,6 +54,7 @@ public class RecipeStepContainerFragment
     void setRecipeStep(long recipeId, int stepIndex) {
         this.recipeId = recipeId;
         this.stepIndex = stepIndex;
+        Log.i(LOG_TAG, "setRecipeStep: Activity has set step index " + stepIndex);
 
         initLoader();
     }
@@ -62,9 +63,19 @@ public class RecipeStepContainerFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            recipeId = getArguments().getLong(RECIPE_ID_PARAM);
-            stepIndex = getArguments().getInt(STEP_INDEX_PARAM);
+        if (savedInstanceState != null) {
+            recipeId = savedInstanceState.getLong(RECIPE_ID_PARAM);
+            stepIndex = savedInstanceState.getInt(STEP_INDEX_PARAM);
+            Log.i(LOG_TAG, "onCreate: Loaded step index " + stepIndex);
+        }
+
+        if (recipeId == null) {
+            recipeId = ActivityNavigator.getRecipeId(getActivity().getIntent());
+        }
+
+        if (stepIndex == null) {
+            stepIndex = ActivityNavigator.getRecipeStepIndex(getActivity().getIntent());
+            Log.i(LOG_TAG, "onCreate: Loaded step index from intent " + stepIndex);
         }
     }
 
@@ -74,6 +85,7 @@ public class RecipeStepContainerFragment
 
         outState.putLong(RECIPE_ID_PARAM, recipeId);
         outState.putInt(STEP_INDEX_PARAM, stepIndex);
+        Log.i(LOG_TAG, "onSaveInstanceState: Saved stepIndex " + stepIndex);
     }
 
     @Override
@@ -235,6 +247,7 @@ public class RecipeStepContainerFragment
             if ((cursor != null) && (cursor.moveToPosition(position))) {
                 SmartCursor smartCursor = new SmartCursor(cursor, StepTable.COLUMN_NAMES);
                 stepIndex = smartCursor.getInt(StepTable.STEP_INDEX_COLUMN);
+                Log.i(LOG_TAG, "onPageSelected: Set stepIndex from cursor: " + stepIndex);
             }
         }
 

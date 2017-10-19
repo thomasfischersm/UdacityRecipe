@@ -22,14 +22,6 @@ public class RecipeStepActivity extends ParentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        long recipeId = ActivityNavigator.getRecipeId(getIntent());
-        int stepIndex = ActivityNavigator.getRecipeStepIndex(getIntent());
-
-        RecipeStepContainerFragment recipeStepContainerFragment =
-                (RecipeStepContainerFragment) getSupportFragmentManager().findFragmentById(
-                        R.id.recipe_fragment);
-        recipeStepContainerFragment.setRecipeStep(recipeId, stepIndex);
-
         // Go to full screen in landscape.
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
