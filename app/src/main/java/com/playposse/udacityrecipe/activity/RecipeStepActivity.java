@@ -1,7 +1,10 @@
 package com.playposse.udacityrecipe.activity;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.View;
+import android.view.WindowManager;
 
 import com.playposse.udacityrecipe.R;
 
@@ -26,5 +29,15 @@ public class RecipeStepActivity extends ParentActivity {
                 (RecipeStepContainerFragment) getSupportFragmentManager().findFragmentById(
                         R.id.recipe_fragment);
         recipeStepContainerFragment.setRecipeStep(recipeId, stepIndex);
+
+        // Go to full screen in landscape.
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            View decorView = getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+            hideToolbar();
+        }
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import com.playposse.udacityrecipe.R;
@@ -43,5 +44,9 @@ public abstract class ParentActivity extends AppCompatActivity  {
     @Override
     public void setTitle(CharSequence title) {
         toolbarTitleTextView.setText(title);
+    }
+
+    protected void hideToolbar() {
+        toolbar.setVisibility(View.GONE);
     }
 }

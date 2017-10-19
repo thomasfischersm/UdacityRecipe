@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -46,6 +47,7 @@ public class RecipeStepIndividualFragment extends Fragment {
     public static final String THUMBNAIL_PARAM = "thumbnailUrl";
 
     @BindView(R.id.player_view) SimpleExoPlayerView playerView;
+    @BindView(R.id.no_video_available_layout) FrameLayout noVideoAvailableLayout;
     @BindView(R.id.step_description_text_view) TextView stepDescriptionTextView;
 
     private long recipeId;
@@ -120,12 +122,16 @@ public class RecipeStepIndividualFragment extends Fragment {
         super.onResume();
 
         if (!StringUtil.isEmpty(videoUrl)) {
+            playerView.setVisibility(View.VISIBLE);
+            noVideoAvailableLayout.setVisibility(View.GONE);
+
             simpleExoPlayer = createExoPlayer();
             playerView.setPlayer(simpleExoPlayer);
 
             preparePlayer(videoUrl);
         } else {
             playerView.setVisibility(View.GONE);
+            noVideoAvailableLayout.setVisibility(View.VISIBLE);
         }
     }
 

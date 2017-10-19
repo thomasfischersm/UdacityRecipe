@@ -69,6 +69,14 @@ public class RecipeStepContainerFragment
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putLong(RECIPE_ID_PARAM, recipeId);
+        outState.putInt(STEP_INDEX_PARAM, stepIndex);
+    }
+
+    @Override
     public View onCreateView(
             LayoutInflater inflater,
             ViewGroup container,
@@ -80,6 +88,7 @@ public class RecipeStepContainerFragment
 
         recipeStepAdapter = new RecipeStepPagerAdapter(getFragmentManager());
         recipeStepPager.setAdapter(recipeStepAdapter);
+        recipeStepPager.addOnPageChangeListener(new PageChangeListener());
 
         initLoader();
 
@@ -202,6 +211,36 @@ public class RecipeStepContainerFragment
         @Override
         public int getItemPosition(Object object){
             return PagerAdapter.POSITION_NONE;
+        }
+
+        private Cursor getCursor() {
+            return cursor;
+        }
+    }
+
+    /**
+     * A {@link ViewPager.OnPageChangeListener} that updates the current stepIndex, so that
+     * rotation to landscape won't forget the current position.
+     */
+    private class PageChangeListener implements ViewPager.OnPageChangeListener {
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            // Ignore.
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            Cursor cursor = recipeStepAdapter.getCursor();
+            if ((cursor != null) && (cursor.moveToPosition(position))) {
+                SmartCursor smartCursor = new SmartCursor(cursor, StepTable.COLUMN_NAMES);
+                stepIndex = smartCursor.getInt(StepTable.STEP_INDEX_COLUMN);
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+            // Ignore.
         }
     }
 }
