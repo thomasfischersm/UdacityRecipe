@@ -3,6 +3,8 @@ package com.playposse.udacityrecipe.activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.playposse.udacityrecipe.R;
+
 /**
  * A utility that helps navigating between activities.
  */
@@ -15,7 +17,8 @@ public final class ActivityNavigator {
     private static final long DEFAULT_ID = -1;
     private static final int DEFAULT_STEP_INDEX = -1;
 
-    private ActivityNavigator() {}
+    private ActivityNavigator() {
+    }
 
     public static void startMainActivity(Context context) {
         context.startActivity(new Intent(context, RecipeListActivity.class));
@@ -49,6 +52,10 @@ public final class ActivityNavigator {
     }
 
     static String getRecipeName(Intent intent) {
-        ;return intent.getStringExtra(RECIPE_NAME_EXTRA);
+        return intent.getStringExtra(RECIPE_NAME_EXTRA);
+    }
+
+    private static boolean isTablet(Context context) {
+        return context.getResources().getBoolean(R.bool.isTablet);
     }
 }

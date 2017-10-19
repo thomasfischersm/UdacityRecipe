@@ -23,6 +23,7 @@ import com.playposse.udacityrecipe.data.RecipeContentContract.RecipeTable;
 import com.playposse.udacityrecipe.data.RecipePhotoLibrary;
 import com.playposse.udacityrecipe.util.FontUtil;
 import com.playposse.udacityrecipe.util.RecyclerViewCursorAdapter;
+import com.playposse.udacityrecipe.util.ResponsiveGridLayoutManager;
 import com.playposse.udacityrecipe.util.SmartCursor;
 
 import butterknife.BindView;
@@ -60,7 +61,7 @@ public class RecipeListFragment extends Fragment implements LoaderManager.Loader
         recipeRecyclerView.setHasFixedSize(true);
 
         LinearLayoutManager layoutManager =
-                new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                new ResponsiveGridLayoutManager(getActivity(), R.dimen.min_grid_item_width);
         recipeRecyclerView.setLayoutManager(layoutManager);
         recipeAdapter = new RecipeAdapter();
         recipeRecyclerView.setAdapter(recipeAdapter);
