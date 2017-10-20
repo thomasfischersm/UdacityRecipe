@@ -130,8 +130,11 @@ public class RecipeStepContainerFragment
 
         // The data is sometimes missing steps.
         buildStepIndexToPositionMap(cursor);
-        int position = stepIndexToPositionMap.get(stepIndex);
-        recipeStepPager.setCurrentItem(position);
+
+        if ((stepIndex != null) && (stepIndex != -1)) {
+            int position = stepIndexToPositionMap.get(stepIndex);
+            recipeStepPager.setCurrentItem(position);
+        }
 
         String recipeName = ActivityNavigator.getRecipeName(getActivity().getIntent());
         if (!StringUtil.isEmpty(recipeName)) {
@@ -145,10 +148,10 @@ public class RecipeStepContainerFragment
         SmartCursor smartCursor = new SmartCursor(cursor, StepTable.COLUMN_NAMES);
 
         if (cursor.moveToFirst()) {
-            while (cursor.moveToNext()) {
+            do {
                 int stepIndex = smartCursor.getInt(StepTable.STEP_INDEX_COLUMN);
                 stepIndexToPositionMap.put(stepIndex, cursor.getPosition());
-            }
+            } while (cursor.moveToNext());
         }
     }
 

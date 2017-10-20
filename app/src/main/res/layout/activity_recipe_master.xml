@@ -5,18 +5,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.playposse.udacityrecipe.activity.RecipeStepActivity">
+    tools:context="com.playposse.udacityrecipe.activity.RecipeMasterActivity">
 
     <include layout="@layout/toolbar"/>
 
     <fragment
+        android:id="@+id/recipe_fragment"
+        android:name="com.playposse.udacityrecipe.activity.RecipeFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/recipe_step_container_fragment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
+
+    <fragment
         android:id="@+id/recipe_step_container_fragment"
         android:name="com.playposse.udacityrecipe.activity.RecipeStepContainerFragment"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:tag="recipe_step_container_fragment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/recipe_fragment"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
 </android.support.constraint.ConstraintLayout>

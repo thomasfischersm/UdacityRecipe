@@ -133,6 +133,13 @@ public class RecipeStepIndividualFragment extends Fragment {
             playerView.setVisibility(View.GONE);
             noVideoAvailableLayout.setVisibility(View.VISIBLE);
         }
+
+        if (ActivityNavigator.isLandscape(getActivity())
+                && !ActivityNavigator.isTablet(getActivity())) {
+            stepDescriptionTextView.setVisibility(View.GONE);
+        } else {
+            stepDescriptionTextView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

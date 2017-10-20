@@ -2,6 +2,7 @@ package com.playposse.udacityrecipe.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 
 import com.playposse.udacityrecipe.R;
 
@@ -25,16 +26,22 @@ public final class ActivityNavigator {
     }
 
     static void startRecipeActivity(Context context, long recipeId) {
-        Intent intent = new Intent(context, RecipeActivity.class);
-        intent.putExtra(RECIPE_ID_EXTRA, recipeId);
-        context.startActivity(intent);
+        if (!isTablet(context)) {
+            Intent intent = new Intent(context, RecipeActivity.class);
+            intent.putExtra(RECIPE_ID_EXTRA, recipeId);
+            context.startActivity(intent);
+        } else {
+            Intent intent = new Intent(context, RecipeMasterActivity.class);
+            intent.putExtra(RECIPE_ID_EXTRA, recipeId);
+            context.startActivity(intent);
+        }
     }
 
     static long getRecipeId(Intent intent) {
         return intent.getLongExtra(RECIPE_ID_EXTRA, DEFAULT_ID);
     }
 
-    static void startRecipeSepActivity(
+    static void startRecipeStepActivity(
             Context context,
             long recipeId,
             int recipeStepIndex,
@@ -55,7 +62,12 @@ public final class ActivityNavigator {
         return intent.getStringExtra(RECIPE_NAME_EXTRA);
     }
 
-    private static boolean isTablet(Context context) {
+    static boolean isTablet(Context context) {
         return context.getResources().getBoolean(R.bool.isTablet);
+    }
+
+    static boolean isLandscape(Context context) {
+        int orientation = context.getResources().getConfiguration().orientation;
+        return orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 }

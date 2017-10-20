@@ -2,25 +2,24 @@ package com.playposse.udacityrecipe.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.playposse.udacityrecipe.R;
 
 /**
- * An {@link Activity} that shows the recipe and the overview of steps.
+ * An {@link Activity} that shows the recipe and recipe steps side by side.
  */
-public class RecipeActivity extends ParentActivity implements RecipeFragmentOwner {
+public class RecipeMasterActivity extends ParentActivity implements RecipeFragmentOwner {
 
-    private static final String LOG_TAG = RecipeActivity.class.getSimpleName();
+    private static final String LOG_TAG = RecipeMasterActivity.class.getSimpleName();
 
     @Override
     protected int getContentLayoutId() {
-        return R.layout.activity_recipe;
+        return R.layout.activity_recipe_master;
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         long recipeId = ActivityNavigator.getRecipeId(getIntent());
@@ -34,6 +33,9 @@ public class RecipeActivity extends ParentActivity implements RecipeFragmentOwne
 
     @Override
     public void onRecipeStepSelected(long recipeId, int stepIndex, String recipeName) {
-        ActivityNavigator.startRecipeStepActivity(this, recipeId, stepIndex, recipeName);
+        RecipeStepContainerFragment recipeStepContainerFragment =
+                (RecipeStepContainerFragment) getSupportFragmentManager().findFragmentById(
+                        R.id.recipe_step_container_fragment);
+        recipeStepContainerFragment.setRecipeStep(recipeId, stepIndex);
     }
 }

@@ -318,11 +318,7 @@ public class RecipeFragment extends Fragment {
             holder.rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ActivityNavigator.startRecipeSepActivity(
-                            getActivity(),
-                            recipeId,
-                            stepIndex,
-                            recipeName);
+                    owner.onRecipeStepSelected(recipeId, stepIndex, recipeName);
                 }
             });
         }

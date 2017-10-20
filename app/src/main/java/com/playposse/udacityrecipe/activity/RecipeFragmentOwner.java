@@ -10,5 +10,5 @@ import android.support.v4.app.Fragment;
  */
 public interface RecipeFragmentOwner {
 
-    void onRecipeStepSelected(long recipeId, int stepId, String recipeName);
+    void onRecipeStepSelected(long recipeId, int stepIndex, String recipeName);
 }
