@@ -4,9 +4,11 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.widget.ImageView;
+import android.widget.RemoteViews;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.AppWidgetTarget;
 import com.bumptech.glide.request.target.Target;
 import com.playposse.udacityrecipe.R;
 import com.playposse.udacityrecipe.util.StringUtil;
@@ -56,6 +58,38 @@ public final class RecipePhotoLibrary {
                         .load(recipeDrawableId)
                         .apply(RequestOptions.overrideOf(Target.SIZE_ORIGINAL))
                         .into(imageView);
+
+            }
+        }
+    }
+
+
+    public static void loadPhotoInWidget(
+            Context context,
+            RemoteViews views,
+            int appWidgetId,
+            int viewId,
+            String imageUrl,
+            String recipeName) {
+
+        AppWidgetTarget appWidgetTarget =
+                new AppWidgetTarget(context, viewId, views, appWidgetId);
+
+        if (!StringUtil.isEmpty(imageUrl)) {
+            Glide.with(context)
+                    .asBitmap()
+                    .load(imageUrl)
+                    .apply(RequestOptions.overrideOf(Target.SIZE_ORIGINAL))
+                    .into(appWidgetTarget);
+        } else {
+            Integer recipeDrawableId = RecipePhotoLibrary.getPhoto(recipeName);
+            if (recipeDrawableId != null) {
+                Drawable drawable = ContextCompat.getDrawable(context, recipeDrawableId);
+                Glide.with(context)
+                        .asBitmap()
+                        .load(recipeDrawableId)
+                        .apply(RequestOptions.overrideOf(Target.SIZE_ORIGINAL))
+                        .into(appWidgetTarget);
 
             }
         }

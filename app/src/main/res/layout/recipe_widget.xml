@@ -1,0 +1,49 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:id="@+id/root_view"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:padding="@dimen/widget_margin">
+
+    <ImageView
+        android:id="@+id/recipe_photo_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/recipe_photo_background_content_description"
+        android:foreground="@color/fade_overlay"
+        android:scaleType="centerCrop"
+        android:src="@drawable/aditya_romansa_117300"/>
+
+    <TextView
+        android:id="@+id/select_recipe_hint_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/select_recipe_hint"
+        android:textColor="@color/dark_text_color"
+        android:textSize="24sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/recipe_name_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dark_text_color"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:text="Recipe title"/>
+
+        <TextView
+            android:id="@+id/recipe_steps_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="1. Call 1-800-dominos\n2. Open the door\n3. Enjoy"/>
+    </LinearLayout>
+</FrameLayout>

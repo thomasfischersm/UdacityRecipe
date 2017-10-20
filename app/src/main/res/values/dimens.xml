@@ -6,4 +6,6 @@
     <dimen name="recipe_ingredients_text_size">12sp</dimen>
     <dimen name="recipe_steps_text_size">16sp</dimen>
     <dimen name="recipe_step_description_text_size">20sp</dimen>
+
+    <dimen name="widget_margin">8dp</dimen>
 </resources>

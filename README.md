@@ -38,6 +38,17 @@ The better approach is to set a minimum width for the grid items and fit as many
 the available space. I've implemented a custom layout manager and resource dimension that does that.
 
 
+## How To Select A Recipe For The Widget
+The project assignment was unclear on how to select the recipe that is specified by the widget. One
+way would be to have the user tap the widget and choose the recipe. A nicer approach would be, if
+the recipe automatically knows which recipe to display. Presumably, the last recipe that the user
+looked at inside the app is the recipe the user intents to cook. (We'll assume that we don't have
+multi-tasking cooks, who cook multiple recipes at the same time.)
+
+So, the widget will ignore the normal update events and only respond to broadcast events when the
+user selects a new recipe.
+
+
 # Coding Standard
 - I am a conscientious dissenter of prefixing field names with the letter 'm'. This app follows
 the Google coding standard, not that of the Android team. There are plenty of intelligent arguments

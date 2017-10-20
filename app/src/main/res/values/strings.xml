@@ -16,4 +16,9 @@
 
     <!-- Recipe step fragment -->
     <string name="no_video_available">No video available</string>
+
+    <!-- Widget -->
+    <string name="select_recipe_hint">Select a recipe in the app</string>
+    <string name="add_widget">Add widget</string>
+    <string name="whole_short_step_for_widget">%1$d. %2$s\n</string>
 </resources>

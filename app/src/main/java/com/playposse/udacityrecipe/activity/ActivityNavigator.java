@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 
 import com.playposse.udacityrecipe.R;
+import com.playposse.udacityrecipe.widget.WidgetCommunication;
 
 /**
  * A utility that helps navigating between activities.
@@ -26,14 +27,19 @@ public final class ActivityNavigator {
     }
 
     static void startRecipeActivity(Context context, long recipeId) {
+        context.startActivity(createRecipeActivityIntent(context, recipeId));
+        WidgetCommunication.selectRecipe(context, recipeId);
+    }
+
+    public static Intent createRecipeActivityIntent(Context context, long recipeId) {
         if (!isTablet(context)) {
             Intent intent = new Intent(context, RecipeActivity.class);
             intent.putExtra(RECIPE_ID_EXTRA, recipeId);
-            context.startActivity(intent);
+            return intent;
         } else {
             Intent intent = new Intent(context, RecipeMasterActivity.class);
             intent.putExtra(RECIPE_ID_EXTRA, recipeId);
-            context.startActivity(intent);
+            return intent;
         }
     }
 
