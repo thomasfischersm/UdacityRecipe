@@ -20,5 +20,5 @@
         android:layout_height="wrap_content"
         android:paddingBottom="4sp"
         android:paddingTop="4sp"
-        android:textSize="16sp"/>
+        android:textSize="@dimen/recipe_steps_text_size"/>
 </LinearLayout>

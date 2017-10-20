@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="min_grid_item_width">400dp</dimen>
+
+    <dimen name="recipe_heading_text_size">32sp</dimen>
+    <dimen name="recipe_ingredients_text_size">12sp</dimen>
+    <dimen name="recipe_steps_text_size">16sp</dimen>
+    <dimen name="recipe_step_description_text_size">20sp</dimen>
 </resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="recipe_heading_text_size">40sp</dimen>
+    <dimen name="recipe_ingredients_text_size">14sp</dimen>
+    <dimen name="recipe_steps_text_size">20sp</dimen>
+    <dimen name="recipe_step_description_text_size">20sp</dimen>
+</resources>

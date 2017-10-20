@@ -38,7 +38,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/dark_text_color"
-                    android:textSize="32sp"
+                    android:textSize="@dimen/recipe_heading_text_size"
                     tools:text="Recipe name"/>
 
                 <android.support.v7.widget.RecyclerView
