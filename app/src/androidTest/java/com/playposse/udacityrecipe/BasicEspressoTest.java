@@ -3,6 +3,7 @@ package com.playposse.udacityrecipe;
 import android.app.Instrumentation;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -17,6 +18,7 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.swipeUp;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -72,6 +74,8 @@ public class BasicEspressoTest {
         onView(allOf(withText("Nutella Pie"), withId(R.id.recipe_name_text_view))).check(matches(isDisplayed()));
         Espresso.pressBack();
         Espresso.onView(withId(R.id.recipe_recycler_view)).perform(swipeUp());
+        onView(withId(R.id.recipe_recycler_view))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(3, scrollTo()));
         onView(withText("Yellow Cake")).check(matches(isDisplayed()));
 
         // Try another recipe.
