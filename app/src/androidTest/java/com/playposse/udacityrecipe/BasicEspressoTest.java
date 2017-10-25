@@ -72,7 +72,7 @@ public class BasicEspressoTest {
         // run the test. I originally used a Pixel emulated (API 25). The reviewer said that he/she
         // used Nexus 5 (API 25). I've tried that as well a couple times with success.
         // A common cause for Espresso flakiness are animations enabled on the phone. The
-        // Espresso instructions advices and explains how to disable animations. I wonder if that
+        // Espresso instructions advises and explains how to disable animations. I wonder if that
         // helps the reviewer run Espresso tests successfully.
         // In any case, here is the Thread.sleep(2_000) that the reviewer wanted.
         try {
