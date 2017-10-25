@@ -23,7 +23,9 @@ public final class ActivityNavigator {
     }
 
     public static void startMainActivity(Context context) {
-        context.startActivity(new Intent(context, RecipeListActivity.class));
+        Intent intent = new Intent(context, RecipeListActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        context.startActivity(intent);
     }
 
     static void startRecipeActivity(Context context, long recipeId) {
