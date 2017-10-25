@@ -74,6 +74,7 @@ public class BasicEspressoTest {
         // A common cause for Espresso flakiness are animations enabled on the phone. The
         // Espresso instructions advises and explains how to disable animations. I wonder if that
         // helps the reviewer run Espresso tests successfully.
+        // https://developer.android.com/training/testing/ui-testing/espresso-testing.html#setup
         // In any case, here is the Thread.sleep(2_000) that the reviewer wanted.
         try {
             Thread.sleep(2_000);
