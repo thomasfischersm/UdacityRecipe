@@ -41,7 +41,7 @@
             tools:text="Recipe title"/>
 
         <TextView
-            android:id="@+id/recipe_steps_text_view"
+            android:id="@+id/recipe_ingredients_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="1. Call 1-800-dominos\n2. Open the door\n3. Enjoy"/>

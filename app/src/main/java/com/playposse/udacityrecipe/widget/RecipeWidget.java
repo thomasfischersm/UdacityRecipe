@@ -24,14 +24,14 @@ public class RecipeWidget extends AppWidgetProvider {
             int appWidgetId,
             long recipeId,
             String recipeName,
-            String recipeSteps,
+            String ingredients,
             String recipePhotoUrl) {
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_widget);
 
         // Set text.
         views.setTextViewText(R.id.recipe_name_text_view, recipeName);
-        views.setTextViewText(R.id.recipe_steps_text_view, recipeSteps);
+        views.setTextViewText(R.id.recipe_ingredients_text_view, ingredients);
         views.setViewVisibility(R.id.select_recipe_hint_text_view, View.GONE);
 
         // Load background photo.
@@ -68,7 +68,7 @@ public class RecipeWidget extends AppWidgetProvider {
 
             long recipeId = intent.getLongExtra(WidgetCommunication.RECIPE_ID, -1);
             String recipeName = intent.getStringExtra(WidgetCommunication.RECIPE_NAME);
-            String recipeSteps = intent.getStringExtra(WidgetCommunication.RECIPE_STEPS);
+            String ingredients = intent.getStringExtra(WidgetCommunication.RECIPE_INGREDIENTS);
             String recipePhotoUrl = intent.getStringExtra(WidgetCommunication.RECIPE_PHOTO_URL);
 
             for (int appWidgetId : appWidgetIds) {
@@ -78,7 +78,7 @@ public class RecipeWidget extends AppWidgetProvider {
                         appWidgetId,
                         recipeId,
                         recipeName,
-                        recipeSteps,
+                        ingredients,
                         recipePhotoUrl);
             }
         }

@@ -7,9 +7,8 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.playposse.udacityrecipe.R;
+import com.playposse.udacityrecipe.data.RecipeContentContract.IngredientTable;
 import com.playposse.udacityrecipe.data.RecipeContentContract.RecipeTable;
-import com.playposse.udacityrecipe.data.RecipeContentContract.StepTable;
-import com.playposse.udacityrecipe.data.RecipePhotoLibrary;
 import com.playposse.udacityrecipe.util.SmartCursor;
 
 /**
@@ -23,7 +22,7 @@ public final class WidgetCommunication {
             "com.playposse.udacityrecipe.RECIPE_SELECTED";
     static final String RECIPE_ID = "com.playposse.udacityrecipe.RECIPE_ID";
     static final String RECIPE_NAME = "com.playposse.udacityrecipe.RECIPE_NAME";
-    static final String RECIPE_STEPS = "com.playposse.udacityrecipe.RECIPE_STEPS";
+    static final String RECIPE_INGREDIENTS = "com.playposse.udacityrecipe.RECIPE_INGREDIENTS";
     static final String RECIPE_PHOTO_URL = "com.playposse.udacityrecipe.RECIPE_PHOTO_URL";
 
     public static void selectRecipe(Context context, long recipeId) {
@@ -58,51 +57,54 @@ public final class WidgetCommunication {
         }
 
         // Get the recipe steps.
-        Cursor stepCursor = contentResolver.query(StepTable.CONTENT_URI,
-                StepTable.COLUMN_NAMES,
-                StepTable.RECIPE_ID_COLUMN + "=?",
+        Cursor ingredientCursor = contentResolver.query(IngredientTable.CONTENT_URI,
+                IngredientTable.COLUMN_NAMES,
+                IngredientTable.RECIPE_ID_COLUMN + "=?",
                 new String[]{Long.toString(recipeId)},
-                StepTable.STEP_INDEX_COLUMN + " asc");
+                null);
 
-        StringBuilder stepsBuilder;
+        StringBuilder ingredientBuilder;
 
         try {
-            stepsBuilder = new StringBuilder();
-            SmartCursor smartCursor = new SmartCursor(stepCursor, StepTable.COLUMN_NAMES);
+            ingredientBuilder = new StringBuilder();
+            SmartCursor smartCursor =
+                    new SmartCursor(ingredientCursor, IngredientTable.COLUMN_NAMES);
 
-            if ((stepCursor != null) && stepCursor.moveToFirst()) {
+            if ((ingredientCursor != null) && ingredientCursor.moveToFirst()) {
                 do {
-                    int stepIndex = smartCursor.getInt(StepTable.STEP_INDEX_COLUMN);
-                    String shortDescription =
-                            smartCursor.getString(StepTable.SHORT_DESCRIPTION_COLUMN);
-                    String stepStr = context.getString(
-                            R.string.whole_short_step_for_widget,
-                            stepIndex,
-                            shortDescription);
-                    stepsBuilder.append(stepStr);
-                } while (stepCursor.moveToNext());
+                    String quantity = smartCursor.getString(IngredientTable.QUANTITY_COLUMN);
+                    String measure = smartCursor.getString(IngredientTable.MEASURE_COLUMN);
+                    String ingredient = smartCursor.getString(IngredientTable.INGREDIENT_COLUMN);
+
+                    String ingredientStr = context.getString(
+                            R.string.whole_ingredient,
+                            quantity,
+                            measure,
+                            ingredient);
+                    ingredientBuilder.append(ingredientStr);
+                } while (ingredientCursor.moveToNext());
             }
         } finally {
-            if (stepCursor != null) {
-                stepCursor.close();
+            if (ingredientCursor != null) {
+                ingredientCursor.close();
             }
         }
 
 
-        selectRecipe(context, recipeId, recipeName, stepsBuilder.toString().trim(), recipePhotoUrl);
+        selectRecipe(context, recipeId, recipeName, ingredientBuilder.toString().trim(), recipePhotoUrl);
     }
 
     private static void selectRecipe(
             Context context,
             long recipeId,
             String recipeName,
-            String recipeSteps,
+            String recipeIngredients,
             String recipePhotoUrl) {
 
         Intent intent = new Intent(RECIPE_SELECTED_ACTION);
         intent.putExtra(RECIPE_ID, recipeId);
         intent.putExtra(RECIPE_NAME, recipeName);
-        intent.putExtra(RECIPE_STEPS, recipeSteps);
+        intent.putExtra(RECIPE_INGREDIENTS, recipeIngredients);
         intent.putExtra(RECIPE_PHOTO_URL, recipePhotoUrl);
         context.sendBroadcast(intent);
     }
