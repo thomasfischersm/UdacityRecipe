@@ -66,6 +66,21 @@ public class BasicEspressoTest {
         onView(withText("Recipe Introduction")).check(matches(isDisplayed()));
         onView(withText("2. Prep the cookie crust.")).perform(click());
 
+        // The Udacity reviewer insists on adding Thread.sleep here.
+        // As far as I know, adding Thread.sleep is a bad testing practice.
+        // Espresso should wait implicitly until the activity is loaded. That happens for me when I
+        // run the test. I originally used a Pixel emulated (API 25). The reviewer said that he/she
+        // used Nexus 5 (API 25). I've tried that as well a couple times with success.
+        // A common cause for Espresso flakiness are animations enabled on the phone. The
+        // Espresso instructions advices and explains how to disable animations. I wonder if that
+        // helps the reviewer run Espresso tests successfully.
+        // In any case, here is the Thread.sleep(2_000) that the reviewer wanted.
+        try {
+            Thread.sleep(2_000);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+
         // on step activity.
         onView(withText("2. Whisk the graham cracker crumbs, 50 grams (1/4 cup) of sugar, and 1/2 teaspoon of salt together in a medium bowl. Pour the melted butter and 1 teaspoon of vanilla into the dry ingredients and stir together until evenly mixed.")).check(matches(isDisplayed()));
 
