@@ -13,7 +13,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/toolbar_background02"
         android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+        android:theme="@style/ToolbarTheme">
 
         <TextView
             android:id="@+id/toolbar_title_text_view"
