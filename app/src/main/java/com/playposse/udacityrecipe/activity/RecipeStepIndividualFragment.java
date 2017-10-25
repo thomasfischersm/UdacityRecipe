@@ -2,6 +2,7 @@ package com.playposse.udacityrecipe.activity;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -46,6 +47,9 @@ public class RecipeStepIndividualFragment extends Fragment {
     public static final String VIDEO_URL_PARAM = "videoUrl";
     public static final String THUMBNAIL_PARAM = "thumbnailUrl";
 
+    private static final String POSITION_SAVE_PARAM = "position";
+    private static final String AUTO_PLAY_PARAM = "autoPlay";
+
     @BindView(R.id.player_view) SimpleExoPlayerView playerView;
     @BindView(R.id.no_video_available_layout) FrameLayout noVideoAvailableLayout;
     @BindView(R.id.step_description_text_view) TextView stepDescriptionTextView;
@@ -58,6 +62,8 @@ public class RecipeStepIndividualFragment extends Fragment {
     private String thumbnailUrl;
 
     private SimpleExoPlayer simpleExoPlayer;
+    private Long rememberedPosition;
+    private Boolean rememberedAutoPlay;
 
     public static RecipeStepIndividualFragment newInstance(
             long recipeId,
@@ -147,8 +153,39 @@ public class RecipeStepIndividualFragment extends Fragment {
         super.onPause();
 
         if (simpleExoPlayer != null) {
+            rememberedPosition = simpleExoPlayer.getCurrentPosition();
+            rememberedAutoPlay = simpleExoPlayer.getPlayWhenReady();
+
             simpleExoPlayer.release();
             simpleExoPlayer = null;
+        }
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(POSITION_SAVE_PARAM)) {
+                rememberedPosition = savedInstanceState.getLong(POSITION_SAVE_PARAM);
+            }
+            if (savedInstanceState.containsKey(AUTO_PLAY_PARAM)) {
+                rememberedAutoPlay = savedInstanceState.getBoolean(AUTO_PLAY_PARAM);
+            }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (outState != null) {
+            if (rememberedPosition != null) {
+                outState.putLong(POSITION_SAVE_PARAM, rememberedPosition);
+            }
+            if (rememberedAutoPlay != null) {
+                outState.putBoolean(AUTO_PLAY_PARAM, rememberedAutoPlay);
+            }
         }
     }
 
@@ -166,5 +203,13 @@ public class RecipeStepIndividualFragment extends Fragment {
                 null,
                 null);
         simpleExoPlayer.prepare(videoSource);
+
+        if (rememberedPosition != null) {
+            simpleExoPlayer.seekTo(rememberedPosition);
+        }
+
+        if (rememberedAutoPlay != null) {
+            simpleExoPlayer.setPlayWhenReady(rememberedAutoPlay);
+        }
     }
 }
